@@ -20,3 +20,11 @@ def build_version(include_torch=False):
         version = version + "_torch" + torch.__version__.replace("+", "_")
 
     return version
+
+def get_nvcc_version():
+    p_out = subprocess.check_output(['nvcc', '--version', "|", "grep", "release"]).strip().decode()
+    build, version = p_out.split(',')[1].strip().split()
+
+    assert build == 'release'
+
+    return version
