@@ -17,14 +17,24 @@ def build_version(include_torch=False):
     if include_torch:
         import torch
 
-        version = version + "_torch" + torch.__version__.replace("+", "_")
+        version = (
+            version
+            + "_torch"
+            + torch.__version__.replace("+", "_")
+            + f"_cu{torch.version.cuda}"
+        )
 
     return version
 
-def get_nvcc_version():
-    p_out = subprocess.check_output(['nvcc', '--version', "|", "grep", "release"]).strip().decode()
-    build, version = p_out.split(',')[1].strip().split()
 
-    assert build == 'release'
+def get_nvcc_version():
+    p_out = (
+        subprocess.check_output(["nvcc", "--version", "|", "grep", "release"])
+        .strip()
+        .decode()
+    )
+    build, version = p_out.split(",")[1].strip().split()
+
+    assert build == "release"
 
     return version
