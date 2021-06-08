@@ -5,7 +5,7 @@ import os.path
 
 
 def is_git_repo() -> bool:
-    return shutil.which("git") is not None and os.path.isdir(".git")
+    return shutil.which("git") is not None and os.path.exists(".git")
 
 
 def build_version(include_torch=False):
