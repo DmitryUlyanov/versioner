@@ -8,7 +8,7 @@ def is_git_repo(root_dir) -> bool:
 
 
 def build_version(include_torch=False, root_dir="."):
-    if is_git_repo():
+    if is_git_repo(root_dir=root_dir):
         version_hash = (
             subprocess.check_output(["git", "log", "-1", "--format=%h"], cwd=root_dir).strip().decode()
         )
