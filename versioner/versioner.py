@@ -1,20 +1,19 @@
 import subprocess
 import shutil
 from datetime import datetime
-import os.path
 
 
-def is_git_repo() -> bool:
-    return shutil.which("git") is not None and os.system("git status 2>/dev/null") == 0
+def is_git_repo(root_dir) -> bool:
+    return shutil.which("git") is not None and subprocess.check_output(f"cd {root_dir} && git status 2>/dev/null") == 0
 
 
-def build_version(include_torch=False):
+def build_version(include_torch=False, root_dir="."):
     if is_git_repo():
         version_hash = (
-            subprocess.check_output(["git", "log", "-1", "--format=%h"]).strip().decode()
+            subprocess.check_output(["git", "log", "-1", "--format=%h"], cwd=root_dir).strip().decode()
         )
         last_git_commit_date = (
-            subprocess.check_output(["git", "log", "-1", "--format=%ct"]).strip().decode()
+            subprocess.check_output(["git", "log", "-1", "--format=%ct"], cwd=root_dir).strip().decode()
         )
         version_date = datetime.fromtimestamp(int(last_git_commit_date))
     else:
