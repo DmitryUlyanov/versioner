@@ -1,7 +1,7 @@
 import subprocess
 import shutil
 from datetime import datetime
-
+import os
 
 def is_git_repo(root_dir) -> bool:
     return shutil.which("git") is not None and os.system(f"cd {root_dir} && git status 2>/dev/null") == 0
