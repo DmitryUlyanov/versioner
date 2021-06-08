@@ -4,7 +4,7 @@ from datetime import datetime
 
 
 def is_git_repo(root_dir) -> bool:
-    return shutil.which("git") is not None and subprocess.check_output(f"git status 2>/dev/null", cwd=root_dir) == 0
+    return shutil.which("git") is not None and os.system(f"cd {root_dir} && git status 2>/dev/null") == 0
 
 
 def build_version(include_torch=False, root_dir="."):
