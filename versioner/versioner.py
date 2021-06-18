@@ -31,7 +31,7 @@ def build_version(include_torch=False, root_dir="."):
         version_date = (
             version_date
             + "_torch"
-            + torch.__version__.replace("+", "_")
+            + torch.__version__.split("+")[0]
             + f"_cu{torch.version.cuda}"
         )
 
